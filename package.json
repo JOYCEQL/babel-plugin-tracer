@@ -1,0 +1,15 @@
+{
+  "name": "babel-plugin-tracer",
+  "version": "1.0.4",
+  "description": "Tracer组件库按需加载babel插件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "JOYCE",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.12"
+  }
+}
