@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-tracer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Tracer组件库按需加载babel插件",
   "main": "index.js",
   "scripts": {
