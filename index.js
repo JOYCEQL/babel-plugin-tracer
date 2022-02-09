@@ -1,37 +1,35 @@
-
-
-
 module.exports = function ({ types: t }) {
     return {
         visitor: {
             ImportDeclaration(path, { opts }) {
-                // 判断是否引入指定组件库
+
                 if(path.node.source.value!=opts.lib) return;
                 let node = path.node;
-                let spec = node.specifiers;
+                let spc = node.specifiers;
+                
+                //判断是否为按需引入
+                if(spc[0].type ==='ImportDefaultSpecifier') {
+                    return 
+                }
                 let arr = [];
-                spec.forEach((item,index)=>{
-                    //非按需引入
-                    if(item.type ==='ImportDefaultSpecifier'){
-                        return
-                    }
+
+                spc.forEach((item,index)=>{
+                  
                     if(opts.cssPath) {
                         let cssPath = t.stringLiteral(opts.cssPath.replace(/\{key\}/ig, item.imported.name));
-                        // 解析成 import from csspath
+                        // import from csspath
                         arr.push(t.importDeclaration([], cssPath));
                     }
                     if(opts.jsPath) {
+                        // 按需引入时的改写js路径
                         let jsPath = t.stringLiteral(opts.jsPath);
-                        // import xxx from jsPath
+                        // import {xxx} from jsPath;
                         let jsData = t.importDeclaration([
-                            t.importDefaultSpecifier(
-                                t.identifier(item.imported.name)
-                            )
+                            t.importSpecifier(item.local, item.imported),
                         ], jsPath)
                         arr.push(jsData);
                     }
                 })
-                
                 path.replaceWithMultiple(arr);
 
             }
